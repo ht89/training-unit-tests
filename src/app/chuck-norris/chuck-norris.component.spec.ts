@@ -1,7 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { ChuckNorrisComponent } from './chuck-norris.component';
-import { QuoteService } from './quote.service';
-import { of } from 'rxjs';
+import { QuoteService, RandomQuoteContext } from './quote.service';
+import { Observable, of, throwError } from 'rxjs';
 
 class QuoteServiceStub {
   getRandomQuote() {}
@@ -13,6 +18,11 @@ describe('Chuck Norris Component', () => {
   let quoteService: QuoteService;
 
   let quoteEl: HTMLElement;
+  let getQuoteSpy: jest.SpyInstance<
+    Observable<string>,
+    [context: RandomQuoteContext],
+    any
+  >;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,13 +35,14 @@ describe('Chuck Norris Component', () => {
     quoteService = TestBed.inject(QuoteService);
 
     quoteEl = fixture.nativeElement.querySelector('.chuck-norris');
+    getQuoteSpy = jest.spyOn(quoteService, 'getRandomQuote');
   });
 
   it('should show quote after component initialized', () => {
     // Arrange
-    const getQuoteSpy = jest.spyOn(quoteService, 'getRandomQuote');
     const testQuote = 'Test Quote';
 
+    // the spy result returns synchronously
     getQuoteSpy.mockReturnValue(of(testQuote));
 
     // Act
@@ -41,4 +52,20 @@ describe('Chuck Norris Component', () => {
     expect(quoteEl.textContent).toBe(testQuote);
     expect(getQuoteSpy).toHaveBeenCalledTimes(1);
   });
+
+  it('should display error when QuoteService fails', fakeAsync(() => {
+    // Arrange
+    getQuoteSpy.mockReturnValue(
+      throwError(() => new Error('QuoteService test failure'))
+    );
+
+    // Act
+    fixture.detectChanges();
+    tick(); // flush the component's setTimeout() by advancing the virtual clock
+    fixture.detectChanges(); // update errorMessage within setTimeout()
+
+    // Assert
+    expect(component.errorMessage).toMatch(/test failure/);
+    expect(quoteEl.textContent).toBe('...');
+  }));
 });
