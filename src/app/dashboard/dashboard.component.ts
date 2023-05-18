@@ -27,13 +27,4 @@ export class DashboardComponent implements OnInit {
     const url = `/heroes/${hero.id}`;
     this.router.navigateByUrl(url);
   }
-
-  get title() {
-    const cnt = this.heroes.length;
-    return cnt === 0
-      ? 'No Heroes'
-      : cnt === 1
-      ? 'Top Hero'
-      : `Top ${cnt} Heroes`;
-  }
 }
