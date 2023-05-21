@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, tap, catchError } from 'rxjs';
+import { Observable, tap, catchError, map } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Hero } from './hero';
 
@@ -14,6 +14,24 @@ export class HeroService {
       tap((heroes) => this.log('fetched heroes')),
       catchError(this.handleError('getHeroes'))
     ) as Observable<Hero[]>;
+  }
+
+  getHero<Data>(id: number | string): Observable<Hero> {
+    if (typeof id === 'string') {
+      id = parseInt(id, 10);
+    }
+
+    const url = `${this.heroesUrl}/?id=${id}`;
+
+    return this.http.get<Hero[]>(url).pipe(
+      map((heroes) => heroes[0]),
+      tap((h) => {
+        const outcome = h ? 'fetched' : 'did not find';
+
+        this.log(`${outcome} hero id=${id}`);
+      }),
+      catchError(this.handleError<Hero>(`getHero id=${id}`))
+    );
   }
 
   /**

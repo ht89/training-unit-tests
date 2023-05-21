@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hero } from './hero';
+import { HeroService } from './hero.service';
 
 @Component({
   selector: 'app-hero',
@@ -8,7 +9,11 @@ import { Hero } from './hero';
   styleUrls: ['./hero.component.css'],
 })
 export class HeroComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private heroService: HeroService
+  ) {}
 
   hero!: Hero;
 
@@ -21,7 +26,16 @@ export class HeroComponent implements OnInit {
     // when no id or id===0, create new blank hero
     if (!id) {
       this.hero = { id: 0, name: '' } as Hero;
+      return;
     }
+
+    this.heroService.getHero(id).subscribe((hero) => {
+      if (hero) {
+        this.hero = hero;
+      } else {
+        this.gotoList(); // id not found; navigate to list
+      }
+    });
   }
 
   cancel() {
