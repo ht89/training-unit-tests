@@ -7,8 +7,8 @@ import { DashboardComponent } from './dashboard.component';
 import { Component } from '@angular/core';
 import { provideLocationMocks } from '@angular/common/testing';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { DashboardHeroComponent } from './dashboard-hero.component';
-import { CommonModule, Location } from '@angular/common';
+import { HeroComponent } from '../hero/hero.component';
+import { DashboardModule } from './dashboard.module';
 
 const HEROES = [
   { id: 41, name: 'Bob' },
@@ -35,8 +35,7 @@ async function setup() {
   } as Partial<HeroService>;
 
   TestBed.configureTestingModule({
-    imports: [CommonModule],
-    declarations: [DashboardComponent, DashboardHeroComponent],
+    imports: [DashboardModule],
     providers: [
       provideRouter([
         {
@@ -46,7 +45,7 @@ async function setup() {
         },
         {
           path: 'heroes/:id',
-          component: DashboardHeroComponent,
+          component: HeroComponent,
         },
       ]),
       provideLocationMocks(),

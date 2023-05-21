@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardHeroComponent } from './dashboard-hero.component';
 import { By } from '@angular/platform-browser';
-import { Hero } from './hero';
 import { first } from 'rxjs';
 import { DebugElement } from '@angular/core';
+import { Hero } from '../hero/hero';
 
 describe('DashboardHeroComponent', () => {
   let component: DashboardHeroComponent;
