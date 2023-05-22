@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Router, NavigationEnd, provideRouter } from '@angular/router';
 import { firstValueFrom, filter } from 'rxjs';
 import { DashboardModule } from './dashboard.module';
@@ -43,31 +43,32 @@ describe('DashboardComponent', () => {
     harness = await RouterTestingHarness.create();
     comp = await harness.navigateByUrl('/', DashboardComponent);
 
+    // mock API call
     TestBed.inject(HttpTestingController)
       .expectOne('api/heroes')
       .flush(getTestHeroes());
 
     router = TestBed.inject(Router);
-    harness.detectChanges(); // runs ngOnInit -> getHeroes
+
+    // runs ngOnInit -> getHeroes
+    harness.detectChanges();
   });
 
-  it('should HAVE heroes', () => {
+  it('should have heroes', () => {
     expect(comp.heroes.length).toBeGreaterThan(0);
   });
 
-  it('should DISPLAY heroes', () => {
-    // Act
+  it('should display heroes', () => {
+    // Assert
     // Find and examine the displayed heroes
     // Look for them in the DOM by css class
     const heroes =
       harness.routeNativeElement!.querySelectorAll('dashboard-hero');
+
     expect(heroes.length).toBe(4);
   });
 
   it('should tell navigate when hero clicked', fakeAsync(async () => {
-    // Act
-    tick();
-
     // Arrange
     // get first <div class="hero">
     const heroEl: HTMLElement =
