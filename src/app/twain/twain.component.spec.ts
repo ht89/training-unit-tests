@@ -4,38 +4,37 @@ import {
   fakeAsync,
   tick,
 } from '@angular/core/testing';
-import { ChuckNorrisComponent } from './chuck-norris.component';
-import { QuoteService, RandomQuoteContext } from './quote.service';
+import { TwainService } from './twain.service';
 import { Observable, of, throwError } from 'rxjs';
+import { TwainComponent } from './twain.component';
 
-class QuoteServiceStub {
-  getRandomQuote() {}
+class TwainServiceStub {
+  getQuote() {}
 }
 
-describe('Chuck Norris Component', () => {
-  let fixture: ComponentFixture<ChuckNorrisComponent>;
-  let component: ChuckNorrisComponent;
-  let quoteService: QuoteService;
+describe('TwainComponent', () => {
+  let fixture: ComponentFixture<TwainComponent>;
+  let component: TwainComponent;
+  let twainService: TwainService;
 
   let quoteEl: HTMLElement;
-  let getQuoteSpy: jest.SpyInstance<
-    Observable<string>,
-    [context: RandomQuoteContext],
-    any
-  >;
+  let getQuoteSpy: jest.SpyInstance<Observable<string>, [], any>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ChuckNorrisComponent],
-      providers: [{ provide: QuoteService, useClass: QuoteServiceStub }],
+      imports: [TwainComponent],
+    }).overrideComponent(TwainComponent, {
+      set: {
+        providers: [{ provide: TwainService, useClass: TwainServiceStub }],
+      },
     });
 
-    fixture = TestBed.createComponent(ChuckNorrisComponent);
+    fixture = TestBed.createComponent(TwainComponent);
     component = fixture.componentInstance;
-    quoteService = TestBed.inject(QuoteService);
+    twainService = fixture.debugElement.injector.get(TwainService);
 
-    quoteEl = fixture.nativeElement.querySelector('.chuck-norris');
-    getQuoteSpy = jest.spyOn(quoteService, 'getRandomQuote');
+    quoteEl = fixture.nativeElement.querySelector('.twain');
+    getQuoteSpy = jest.spyOn(twainService, 'getQuote');
   });
 
   it('should show quote after component initialized', () => {

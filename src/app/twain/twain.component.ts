@@ -4,26 +4,27 @@ import { Observable, of } from 'rxjs';
 import { catchError, startWith } from 'rxjs/operators';
 
 import { CommonModule } from '@angular/common';
-import { QuoteService } from './quote.service';
+import { TwainService } from './twain.service';
 
 @Component({
   standalone: true,
-  selector: 'chuck-norris-quote',
-  template: ` <p class="chuck-norris">
+  selector: 'twain-quote',
+  template: ` <p class="twain">
       <i>{{ quote | async }}</i>
     </p>
 
     <button type="button" (click)="getQuote()">Next quote</button>
 
     <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>`,
-  styles: ['.chuck-norris { font-style: italic; } .error { color: red; }'],
+  styles: ['.twain { font-style: italic; } .error { color: red; }'],
   imports: [CommonModule],
+  providers: [TwainService],
 })
-export class ChuckNorrisComponent implements OnInit {
+export class TwainComponent implements OnInit {
   errorMessage!: string;
   quote!: Observable<string>;
 
-  constructor(private readonly service: QuoteService) {}
+  constructor(private readonly service: TwainService) {}
 
   ngOnInit(): void {
     this.getQuote();
@@ -32,7 +33,7 @@ export class ChuckNorrisComponent implements OnInit {
   getQuote() {
     this.errorMessage = '';
 
-    this.quote = this.service.getRandomQuote({ category: 'dev' }).pipe(
+    this.quote = this.service.getQuote().pipe(
       startWith('...'),
       catchError((err: any) => {
         // Wait a turn because errorMessage already set once this turn

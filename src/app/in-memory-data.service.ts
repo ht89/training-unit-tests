@@ -1,4 +1,8 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { QUOTES } from './twain/twain.data';
+
+// Adjust to reduce number of quotes
+const maxQuotes = Infinity; // 0;
 
 /** Create in-memory database of heroes and quotes */
 export class InMemoryDataService implements InMemoryDbService {
@@ -15,6 +19,6 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 20, name: 'Tornado' },
     ];
 
-    return { heroes };
+    return { heroes, quotes: QUOTES.slice(0, maxQuotes) };
   }
 }

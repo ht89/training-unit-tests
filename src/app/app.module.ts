@@ -3,11 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ChuckNorrisComponent } from './chuck-norris/chuck-norris.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { TwainComponent } from './twain/twain.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,7 +15,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ChuckNorrisComponent,
+    TwainComponent,
     DashboardModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
