@@ -3,6 +3,8 @@
   color: white;
 }
 
+
+
 .heroes {
   margin: 0 0 2em 0;
   list-style-type: none;
@@ -25,7 +27,8 @@
   border-radius: 4px;
   display: flex;
   align-items: stretch;
-  height: 1.8em;
+  height: 36px;
+  border: none;
 }
 
 .heroes button:hover {
