@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { first } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { Hero } from '../hero/hero';
+import { click } from '../../testing';
 
 describe('DashboardHeroComponent', () => {
   let component: DashboardHeroComponent;
@@ -65,8 +66,7 @@ describe('DashboardHeroComponent', () => {
       .subscribe((hero: Hero) => (selectedHero = hero));
 
     // Act
-    heroDe.triggerEventHandler('click');
-    // or heroEl.click()
+    click(heroDe);
 
     // Assert
     expect(selectedHero).toBe(expectedHero);
