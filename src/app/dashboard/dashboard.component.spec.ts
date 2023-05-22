@@ -24,37 +24,14 @@ function getTestHeroes(): Hero[] {
   ];
 }
 
-let comp: DashboardComponent;
-let harness: RouterTestingHarness;
+describe('DashboardComponent', () => {
+  let comp: DashboardComponent;
+  let harness: RouterTestingHarness;
+  let router: Router;
 
-describe('DashboardComponent (deep)', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [DashboardModule] });
-  });
-
-  compileAndCreate();
-
-  tests(clickForDeep);
-
-  function clickForDeep() {
-    // get first <div class="hero">
-    const heroEl: HTMLElement =
-      harness.routeNativeElement!.querySelector('.hero')!;
-
-    click(heroEl);
-
-    return firstValueFrom(
-      TestBed.inject(Router).events.pipe(
-        filter((e) => e instanceof NavigationEnd)
-      )
-    );
-  }
-});
-
-/** Add TestBed providers, compile, and create DashboardComponent */
-function compileAndCreate() {
   beforeEach(async () => {
     TestBed.configureTestingModule({
+      imports: [DashboardModule],
       providers: [
         provideRouter([{ path: '**', component: DashboardComponent }]),
         provideHttpClient(),
@@ -69,43 +46,45 @@ function compileAndCreate() {
     TestBed.inject(HttpTestingController)
       .expectOne('api/heroes')
       .flush(getTestHeroes());
+
+    router = TestBed.inject(Router);
+    harness.detectChanges(); // runs ngOnInit -> getHeroes
   });
-}
 
-/**
- * The (almost) same tests for both.
- * Only change: the way that the first hero is clicked
- */
-function tests(heroClick: () => Promise<unknown>) {
-  describe('after get dashboard heroes', () => {
-    let router: Router;
-
-    // Trigger component so it gets heroes and binds to them
-    beforeEach(waitForAsync(() => {
-      router = TestBed.inject(Router);
-      harness.detectChanges(); // runs ngOnInit -> getHeroes
-    }));
-
-    it('should HAVE heroes', () => {
-      expect(comp.heroes.length).toBeGreaterThan(0);
-    });
-
-    it('should DISPLAY heroes', () => {
-      // Find and examine the displayed heroes
-      // Look for them in the DOM by css class
-      const heroes =
-        harness.routeNativeElement!.querySelectorAll('dashboard-hero');
-      expect(heroes.length).toBe(4);
-    });
-
-    it('should tell navigate when hero clicked', fakeAsync(async () => {
-      tick();
-
-      await heroClick(); // trigger click on first inner <div class="hero">
-
-      // expecting to navigate to id of the component's first hero
-      const id = comp.heroes[0].id;
-      expect(router.url).toEqual(`/heroes/${id}`);
-    }));
+  it('should HAVE heroes', () => {
+    expect(comp.heroes.length).toBeGreaterThan(0);
   });
-}
+
+  it('should DISPLAY heroes', () => {
+    // Act
+    // Find and examine the displayed heroes
+    // Look for them in the DOM by css class
+    const heroes =
+      harness.routeNativeElement!.querySelectorAll('dashboard-hero');
+    expect(heroes.length).toBe(4);
+  });
+
+  it('should tell navigate when hero clicked', fakeAsync(async () => {
+    // Act
+    tick();
+
+    // Arrange
+    // get first <div class="hero">
+    const heroEl: HTMLElement =
+      harness.routeNativeElement!.querySelector('.hero')!;
+
+    // Act
+    click(heroEl);
+
+    await firstValueFrom(
+      TestBed.inject(Router).events.pipe(
+        filter((e) => e instanceof NavigationEnd)
+      )
+    );
+
+    // Assert
+    // expecting to navigate to id of the component's first hero
+    const id = comp.heroes[0].id;
+    expect(router.url).toEqual(`/heroes/${id}`);
+  }));
+});
