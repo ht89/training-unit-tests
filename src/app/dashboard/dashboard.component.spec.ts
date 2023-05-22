@@ -53,7 +53,7 @@ describe('DashboardComponent (deep)', () => {
 
 /** Add TestBed providers, compile, and create DashboardComponent */
 function compileAndCreate() {
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([{ path: '**', component: DashboardComponent }]),
@@ -61,17 +61,15 @@ function compileAndCreate() {
         provideHttpClientTesting(),
         HeroService,
       ],
-    })
-      .compileComponents()
-      .then(async () => {
-        harness = await RouterTestingHarness.create();
-        comp = await harness.navigateByUrl('/', DashboardComponent);
+    });
 
-        TestBed.inject(HttpTestingController)
-          .expectOne('api/heroes')
-          .flush(getTestHeroes());
-      });
-  }));
+    harness = await RouterTestingHarness.create();
+    comp = await harness.navigateByUrl('/', DashboardComponent);
+
+    TestBed.inject(HttpTestingController)
+      .expectOne('api/heroes')
+      .flush(getTestHeroes());
+  });
 }
 
 /**
