@@ -5,17 +5,17 @@ import {
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { HeroComponent } from './hero.component';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { HeroModule } from './hero.module';
+import { HeroModule } from './heroes.module';
 import { Hero } from '../model/hero';
 import { getTestHeroes } from '../model/testing';
+import { HeroDetailComponent } from './hero-detail.component';
 
-let component: HeroComponent;
+let component: HeroDetailComponent;
 let harness: RouterTestingHarness;
 let page: Page;
 
-describe('HeroComponent', () => {
+describe('HeroDetailComponent', () => {
   const firstHero = getTestHeroes()[0];
 
   beforeEach(async () => {
@@ -23,7 +23,7 @@ describe('HeroComponent', () => {
       imports: [HeroModule],
       providers: [
         provideRouter([
-          { path: 'heroes/:id', component: HeroComponent },
+          { path: 'heroes/:id', component: HeroDetailComponent },
           // {path: 'heroes', component: HeroListComponent},
         ]),
         provideHttpClient(),
@@ -50,7 +50,7 @@ describe('HeroComponent', () => {
 /** Create the HeroDetailComponent, initialize it, set test variables  */
 async function createComponent(id: number) {
   harness = await RouterTestingHarness.create();
-  component = await harness.navigateByUrl(`/heroes/${id}`, HeroComponent);
+  component = await harness.navigateByUrl(`/heroes/${id}`, HeroDetailComponent);
   page = new Page();
 
   const request = TestBed.inject(HttpTestingController).expectOne(

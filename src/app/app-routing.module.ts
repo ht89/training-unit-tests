@@ -5,7 +5,8 @@ export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: 'heroes',
-    loadChildren: () => import('./hero/hero.module').then((m) => m.HeroModule),
+    loadChildren: () =>
+      import('./heroes/heroes.module').then((m) => m.HeroModule),
   },
 ];
 

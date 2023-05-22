@@ -4,11 +4,11 @@ import { Hero } from '../model/hero';
 import { HeroService } from '../model/hero.service';
 
 @Component({
-  selector: 'app-hero',
-  templateUrl: './hero.component.html',
-  styleUrls: ['./hero.component.css'],
+  selector: 'app-hero-detail',
+  templateUrl: './hero-detail.component.html',
+  styleUrls: ['./hero-detail.component.css'],
 })
-export class HeroComponent implements OnInit {
+export class HeroDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -38,7 +38,9 @@ export class HeroComponent implements OnInit {
     });
   }
 
-  save(): void {}
+  save(): void {
+    this.heroService.updateHero(this.hero).subscribe(() => this.gotoList());
+  }
 
   cancel() {
     this.gotoList();
