@@ -4,12 +4,13 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { Router, provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { HeroModule } from './heroes.module';
 import { Hero } from '../model/hero';
 import { getTestHeroes } from '../model/testing';
 import { HeroDetailComponent } from './hero-detail.component';
+import { HeroesComponent } from './heroes.component';
 
 let component: HeroDetailComponent;
 let harness: RouterTestingHarness;
@@ -24,7 +25,7 @@ describe('HeroDetailComponent', () => {
       providers: [
         provideRouter([
           { path: 'heroes/:id', component: HeroDetailComponent },
-          // {path: 'heroes', component: HeroListComponent},
+          { path: 'heroes', component: HeroesComponent },
         ]),
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -45,6 +46,16 @@ describe('HeroDetailComponent', () => {
       expect(page.nameDisplay.textContent).toBe(expectedHero.name);
     });
   });
+
+  describe('when navigate to non-existent hero', () => {
+    beforeEach(async () => {
+      await createComponent(999);
+    });
+
+    it('should try to navigate back to hero list', () => {
+      expect(TestBed.inject(Router).url).toEqual('/heroes');
+    });
+  });
 });
 
 /** Create the HeroDetailComponent, initialize it, set test variables  */
@@ -56,6 +67,7 @@ async function createComponent(id: number) {
   const request = TestBed.inject(HttpTestingController).expectOne(
     `api/heroes/?id=${id}`
   );
+
   const hero = getTestHeroes().find((h) => h.id === Number(id));
   request.flush(hero ? [hero] : []);
 
