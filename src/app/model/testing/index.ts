@@ -1,4 +1,4 @@
-import { Hero } from 'src/app/hero/hero';
+import { Hero } from 'src/app/model/hero';
 
 export function getTestHeroes(): Hero[] {
   return [

@@ -3,7 +3,7 @@ import { DashboardHeroComponent } from './dashboard-hero.component';
 import { By } from '@angular/platform-browser';
 import { first } from 'rxjs';
 import { DebugElement } from '@angular/core';
-import { Hero } from '../hero/hero';
+import { Hero } from '../model/hero';
 import { click } from '../../testing';
 
 describe('DashboardHeroComponent', () => {

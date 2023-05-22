@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardHeroComponent } from './dashboard-hero.component';
-import { Hero } from '../hero/hero';
+import { Hero } from '../model/hero';
 
 @Component({
   template: `

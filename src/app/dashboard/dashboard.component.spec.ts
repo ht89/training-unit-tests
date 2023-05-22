@@ -3,7 +3,7 @@ import { Router, NavigationEnd, provideRouter } from '@angular/router';
 import { firstValueFrom, filter } from 'rxjs';
 import { DashboardModule } from './dashboard.module';
 import { provideHttpClient } from '@angular/common/http';
-import { HeroService } from '../hero/hero.service';
+import { HeroService } from '../model/hero.service';
 import { DashboardComponent } from './dashboard.component';
 import {
   HttpTestingController,

@@ -8,7 +8,7 @@ import { provideRouter } from '@angular/router';
 import { HeroComponent } from './hero.component';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { HeroModule } from './hero.module';
-import { Hero } from './hero';
+import { Hero } from '../model/hero';
 import { getTestHeroes } from '../model/testing';
 
 let component: HeroComponent;
