@@ -17,8 +17,6 @@ let harness: RouterTestingHarness;
 let page: Page;
 
 describe('HeroDetailComponent', () => {
-  const firstHero = getTestHeroes()[0];
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HeroModule],
@@ -37,7 +35,7 @@ describe('HeroDetailComponent', () => {
     let expectedHero: Hero;
 
     beforeEach(async () => {
-      expectedHero = firstHero;
+      expectedHero = getTestHeroes()[0];
 
       await createComponent(expectedHero.id);
     });
@@ -79,15 +77,19 @@ class Page {
   get buttons() {
     return this.queryAll<HTMLButtonElement>('button');
   }
+
   get saveBtn() {
     return this.buttons[0];
   }
+
   get cancelBtn() {
     return this.buttons[1];
   }
+
   get nameDisplay() {
     return this.query<HTMLElement>('span');
   }
+
   get nameInput() {
     return this.query<HTMLInputElement>('input');
   }
