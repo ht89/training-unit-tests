@@ -38,6 +38,8 @@ export class HeroComponent implements OnInit {
     });
   }
 
+  save(): void {}
+
   cancel() {
     this.gotoList();
   }

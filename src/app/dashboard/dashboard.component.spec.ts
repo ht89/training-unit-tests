@@ -10,19 +10,8 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { Hero } from '../hero/hero';
 import { click } from '../../testing';
-
-function getTestHeroes(): Hero[] {
-  return [
-    { id: 41, name: 'Bob' },
-    { id: 42, name: 'Carol' },
-    { id: 43, name: 'Ted' },
-    { id: 44, name: 'Alice' },
-    { id: 45, name: 'Speedy' },
-    { id: 46, name: 'Stealthy' },
-  ];
-}
+import { getTestHeroes } from '../model/testing';
 
 describe('DashboardComponent', () => {
   let comp: DashboardComponent;
