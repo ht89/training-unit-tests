@@ -19,6 +19,7 @@ describe('WelcomeComponent (class only)', () => {
         { provide: UserService, useClass: MockUserService },
       ],
     });
+
     // inject both the component and the dependent service.
     comp = TestBed.inject(WelcomeComponent);
     userService = TestBed.inject(UserService);

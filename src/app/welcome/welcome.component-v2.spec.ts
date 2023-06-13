@@ -34,6 +34,7 @@ describe('Welcome component', () => {
 
     // Assert
     const content = el.textContent;
+
     expect(content).toContain('Welcome');
     expect(content).toContain('Test User');
   });
@@ -58,6 +59,7 @@ describe('Welcome component', () => {
 
     // Assert
     const content = el.textContent;
+
     expect(content).not.toContain('Welcome');
     expect(content).toMatch(/log in/i);
   });
