@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserService {
   isLoggedIn = true;
   user = { name: 'Sam Spade' };

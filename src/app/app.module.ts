@@ -9,9 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { TwainComponent } from './twain/twain.component';
 import { LightswitchComponent } from './light-switch/light-switch.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
-  declarations: [AppComponent, LightswitchComponent],
+  declarations: [AppComponent, LightswitchComponent, WelcomeComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
