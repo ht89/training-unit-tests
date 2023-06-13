@@ -8,9 +8,10 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { TwainComponent } from './twain/twain.component';
+import { LightswitchComponent } from './light-switch/light-switch.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LightswitchComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lightswitch-comp',
+  selector: 'light-switch',
   template: ` <button type="button" (click)="clicked()">Click me!</button>
     <span>{{ message }}</span>`,
 })
